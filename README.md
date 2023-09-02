@@ -4,5 +4,5 @@ Requirements:
 Usage:
 - docker compose up -d
 - docker exec -it php82-container bash
-- composer install
+- ./setup.sh
 - php bin/console lexik:jwt:generate-keypair
