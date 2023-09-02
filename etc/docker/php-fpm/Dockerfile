@@ -10,9 +10,10 @@ RUN chmod +x /usr/local/bin/install-php-extensions && sync && \
 
 RUN apt-get -y update \
     && apt-get -y --no-install-recommends install git nano curl librabbitmq-dev libssh-dev \
-    && apt-get clean; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/* \
+    && apt-get clean; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
 
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin/ --filename=composer
+RUN curl --insecure https://getcomposer.org/composer.phar -o /usr/bin/composer && chmod +x /usr/bin/composer
+RUN composer self-update
 
 RUN curl -1sLf 'https://dl.cloudsmith.io/public/symfony/stable/setup.deb.sh' | bash
 RUN apt install symfony-cli
@@ -29,3 +30,5 @@ RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
 RUN mkdir -p /var/www
 
 WORKDIR /var/www
+
+EXPOSE 9000
