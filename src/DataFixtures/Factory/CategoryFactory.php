@@ -7,6 +7,7 @@ namespace App\DataFixtures\Factory;
 use App\Entity\Category;
 use DateTimeImmutable;
 use Zenstruck\Foundry\ModelFactory;
+
 use function Zenstruck\Foundry\faker;
 
 class CategoryFactory extends ModelFactory
@@ -19,6 +20,7 @@ class CategoryFactory extends ModelFactory
     protected function getDefaults(): array
     {
         return  [
+            'name' => faker()->word,
             'createdAt' => DateTimeImmutable::createFromMutable(faker()->dateTimeBetween('-2 year', '-1 year')),
             'updatedAt' => DateTimeImmutable::createFromMutable(faker()->dateTimeThisYear),
         ];

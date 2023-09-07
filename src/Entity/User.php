@@ -49,14 +49,15 @@ use Symfony\Component\Validator\Constraints as Assert;
 )
 ]
 #[ORM\Entity(repositoryClass: UserRepository::class)]
+#[ORM\Table(name: 'users')]
 #[UniqueEntity(fields: ['username', 'email'])]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     use TimestampableTrait;
 
     #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
+    #[ORM\GeneratedValue(strategy: "IDENTITY")]
+    #[ORM\Column(type: Types::INTEGER)]
     #[Groups(['read'])]
     private ?int $id = null;
 
@@ -112,6 +113,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->id;
     }
 
+    public function setId(int $id): self
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
     public function getUsername(): string
     {
         return $this->username;
@@ -120,6 +128,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setUsername(string $username): self
     {
         $this->username = $username;
+
         return $this;
     }
 
@@ -137,8 +146,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getRoles(): array
     {
         $roles = $this->roles;
-        if (!in_array(needle: RoleEnum::ROLE_USER->name, haystack: $roles, strict: true)) {
-            $roles[] = RoleEnum::ROLE_USER->name;
+        if (!in_array(needle: RoleEnum::ROLE_USER->value, haystack: $roles, strict: true)) {
+            $roles[] = RoleEnum::ROLE_USER->value;
         }
 
         return array_unique($roles);

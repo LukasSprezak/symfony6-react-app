@@ -38,8 +38,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Comment implements OwnerInterface
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
+    #[ORM\GeneratedValue(strategy: "IDENTITY")]
+    #[ORM\Column(type: Types::INTEGER)]
     private ?int $id = null;
 
     #[ORM\ManyToOne(targetEntity: Product::class, inversedBy: 'comments')]
@@ -73,6 +73,13 @@ class Comment implements OwnerInterface
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function setId(int $id): self
+    {
+        $this->id = $id;
+
+        return $this;
     }
 
     public function getProduct(): ?Product

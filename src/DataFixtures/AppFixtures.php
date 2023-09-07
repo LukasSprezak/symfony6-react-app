@@ -13,6 +13,7 @@ use App\Enum\RoleEnum;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Exception;
+
 use function Zenstruck\Foundry\faker;
 
 class AppFixtures extends Fixture
@@ -27,7 +28,7 @@ class AppFixtures extends Fixture
                 'email' => 'admin@admin.pl',
                 'plainPassword' => 'admin'
             ])
-            ->promoteRole(RoleEnum::ROLE_ADMIN->name)
+            ->promoteRole(RoleEnum::ROLE_ADMIN->value)
             ->create();
 
         UserFactory::new()
@@ -35,7 +36,7 @@ class AppFixtures extends Fixture
                 'email' => 'user@admin.pl',
                 'plainPassword' => 'admin'
             ])
-            ->promoteRole(RoleEnum::ROLE_USER->name)
+            ->promoteRole(RoleEnum::ROLE_USER->value)
             ->create();
 
         ProductFactory::new()
@@ -44,7 +45,7 @@ class AppFixtures extends Fixture
                 return [
                     'tags' => TagFactory::createMany(20),
                     'category' => CategoryFactory::new([
-                        'name' => faker()->words(random_int(2,6), true)
+                        'name' => faker()->words(random_int(2,6), asText: true)
                         ]),
                     ];
                 })

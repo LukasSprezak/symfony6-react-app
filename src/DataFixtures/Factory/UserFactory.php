@@ -11,6 +11,7 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Zenstruck\Foundry\Factory;
 use Zenstruck\Foundry\ModelFactory;
+
 use function Zenstruck\Foundry\faker;
 
 class UserFactory extends ModelFactory

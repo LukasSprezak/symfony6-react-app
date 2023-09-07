@@ -7,6 +7,7 @@ namespace App\DataFixtures\Factory;
 use App\Entity\Tag;
 use DateTimeImmutable;
 use Zenstruck\Foundry\ModelFactory;
+
 use function Zenstruck\Foundry\faker;
 
 class TagFactory extends ModelFactory

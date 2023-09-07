@@ -6,7 +6,9 @@ namespace App\DataFixtures\Factory;
 
 use App\Entity\Product;
 use App\Enum\StatusProductEnum;
+use DateTimeImmutable;
 use Zenstruck\Foundry\ModelFactory;
+
 use function Zenstruck\Foundry\faker;
 
 class ProductFactory extends ModelFactory
@@ -29,11 +31,11 @@ class ProductFactory extends ModelFactory
         return  [
             'name' => self::faker()->sentence,
             'owner' => UserFactory::random(),
-            'createdAt' => faker()->dateTimeBetween('-2 year', '-1 year'),
-            'updatedAt' => faker()->dateTimeThisYear,
+            'createdAt' => DateTimeImmutable::createFromMutable(faker()->dateTimeBetween('-2 year', '-1 year')),
+            'updatedAt' => DateTimeImmutable::createFromMutable(faker()->dateTimeThisYear),
             'status' => $randomStatus,
             'description' => faker()->text(maxNbChars: 100),
-            'slug' => faker()->slug()
+            'slug' => faker()->slug(),
         ];
     }
 }
