@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use Doctrine\{
+    DBAL\Types\Types,
+    ORM\Mapping as ORM
+};
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\TagRepository;
-use Doctrine\DBAL\Types\Types;
-use Doctrine\ORM\Mapping as ORM;
 use JsonSerializable;
 
 #[ORM\Entity(repositoryClass: TagRepository::class)]

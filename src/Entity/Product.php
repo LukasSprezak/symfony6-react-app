@@ -4,22 +4,29 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
-use ApiPlatform\Metadata\ApiResource;
-use ApiPlatform\Metadata\Get;
-use ApiPlatform\Metadata\GetCollection;
-use ApiPlatform\Metadata\Post;
-use ApiPlatform\Metadata\Put;
+use ApiPlatform\Metadata\{
+    ApiResource,
+    Get,
+    Post,
+    Put,
+    GetCollection
+};
+use Doctrine\{
+    Common\Collections\ArrayCollection,
+    Common\Collections\Collection,
+    DBAL\Types\Types,
+    ORM\Mapping as ORM
+};
+
+use Symfony\Component\{
+    Security\Core\User\UserInterface,
+    Serializer\Annotation\Groups,
+    Validator\Constraints as Assert
+};
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use App\Enum\StatusProductEnum;
 use App\Repository\ProductRepository;
 use DateTimeImmutable;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\DBAL\Types\Types;
-use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Serializer\Annotation\Groups;
-use Symfony\Component\Validator\Constraints as Assert;
 
 #[ApiResource(
     operations: [
@@ -95,7 +102,6 @@ class Product implements OwnerInterface
         $this->comments = new ArrayCollection();
         $this->tags = new ArrayCollection();
         $this->setCreatedAt(new DateTimeImmutable());
-        $this->setUpdatedAt(new DateTimeImmutable());
     }
 
     public function getId(): ?int

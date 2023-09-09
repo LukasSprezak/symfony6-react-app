@@ -4,13 +4,17 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Factory;
 
+use Symfony\Component\{
+    Filesystem\Filesystem,
+    PasswordHasher\Hasher\UserPasswordHasherInterface
+};
+use Zenstruck\Foundry\{
+    Factory,
+    ModelFactory
+};
 use App\Entity\User;
 use App\Enum\RoleEnum;
 use DateTimeImmutable;
-use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Zenstruck\Foundry\Factory;
-use Zenstruck\Foundry\ModelFactory;
 
 use function Zenstruck\Foundry\faker;
 
@@ -49,7 +53,6 @@ class UserFactory extends ModelFactory
             'repeatPassword' => 'admin',
             'logo' => 'logo.png',
             'createdAt' => DateTimeImmutable::createFromMutable(faker()->dateTimeBetween('-2 year', '-1 year')),
-            'updatedAt' => DateTimeImmutable::createFromMutable(faker()->dateTimeThisYear),
             'enabled' => true,
         ];
     }

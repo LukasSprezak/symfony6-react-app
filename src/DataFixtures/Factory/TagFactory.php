@@ -22,7 +22,6 @@ class TagFactory extends ModelFactory
        return  [
            'name' => self::faker()->word,
            'createdAt' => DateTimeImmutable::createFromMutable(faker()->dateTimeBetween('-2 year', '-1 year')),
-           'updatedAt' => DateTimeImmutable::createFromMutable(faker()->dateTimeThisYear),
        ];
     }
 }

@@ -13,6 +13,7 @@
         "doctrine/orm": "^2.15",
         "gedmo/doctrine-extensions": "^3.13",
         "gesdinet/jwt-refresh-token-bundle": "^1.1",
+        "hautelook/alice-bundle": "^2.12",
         "justinrainbow/json-schema": "^5.2",
         "lexik/jwt-authentication-bundle": "^2.19",
         "mockery/mockery": "^1.6",

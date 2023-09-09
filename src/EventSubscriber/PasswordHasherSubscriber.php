@@ -4,13 +4,16 @@ declare(strict_types=1);
 
 namespace App\EventSubscriber;
 
+use Symfony\Component\{
+    EventDispatcher\EventSubscriberInterface,
+    HttpFoundation\Request,
+    HttpKernel\Event\ViewEvent,
+    HttpKernel\KernelEvents,
+    PasswordHasher\Hasher\UserPasswordHasherInterface
+
+};
 use ApiPlatform\Symfony\EventListener\EventPriorities;
 use App\Entity\User;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Event\ViewEvent;
-use Symfony\Component\HttpKernel\KernelEvents;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 readonly class PasswordHasherSubscriber implements EventSubscriberInterface
 {
@@ -32,7 +35,7 @@ readonly class PasswordHasherSubscriber implements EventSubscriberInterface
         $user = $event->getControllerResult();
         $method = $event->getRequest()->getMethod();
 
-        if (!$user instanceof User || !in_array($method, [Request::METHOD_POST, Request::METHOD_PUT], true)) {
+        if (!$user instanceof User || !in_array($method, [Request::METHOD_POST, Request::METHOD_PUT], strict: true)) {
             return;
         }
 

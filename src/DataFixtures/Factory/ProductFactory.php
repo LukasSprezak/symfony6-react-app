@@ -14,8 +14,12 @@ use function Zenstruck\Foundry\faker;
 class ProductFactory extends ModelFactory
 {
     private const STATUS = [
-        StatusProductEnum::PUBLISHED,
-        StatusProductEnum::DRAFT,
+        StatusProductEnum::IN_PREPARATION,
+        StatusProductEnum::IN_PROGRESS,
+        StatusProductEnum::COMPLETED,
+        StatusProductEnum::SENT_TO_CUSTOMER,
+        StatusProductEnum::RETRIEVED,
+        StatusProductEnum::ORDER_CANCELLED,
         StatusProductEnum::FINISHED
     ];
 
@@ -32,7 +36,6 @@ class ProductFactory extends ModelFactory
             'name' => self::faker()->sentence,
             'owner' => UserFactory::random(),
             'createdAt' => DateTimeImmutable::createFromMutable(faker()->dateTimeBetween('-2 year', '-1 year')),
-            'updatedAt' => DateTimeImmutable::createFromMutable(faker()->dateTimeThisYear),
             'status' => $randomStatus,
             'description' => faker()->text(maxNbChars: 100),
             'slug' => faker()->slug(),

@@ -22,7 +22,6 @@ class CategoryFactory extends ModelFactory
         return  [
             'name' => faker()->word,
             'createdAt' => DateTimeImmutable::createFromMutable(faker()->dateTimeBetween('-2 year', '-1 year')),
-            'updatedAt' => DateTimeImmutable::createFromMutable(faker()->dateTimeThisYear),
         ];
     }
 }

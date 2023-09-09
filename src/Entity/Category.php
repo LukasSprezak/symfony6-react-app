@@ -4,13 +4,15 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use Doctrine\{
+    Common\Collections\ArrayCollection,
+    Common\Collections\Collection,
+    DBAL\Types\Types,
+    ORM\Mapping as ORM
+};
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\CategoryRepository;
 use DateTimeImmutable;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\DBAL\Types\Types;
-use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
 #[ApiResource]
@@ -34,7 +36,6 @@ class Category
     {
         $this->products = new ArrayCollection();
         $this->setCreatedAt(new DateTimeImmutable());
-        $this->setUpdatedAt(new DateTimeImmutable());
     }
 
     public function getId(): ?int

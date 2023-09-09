@@ -4,13 +4,15 @@ declare(strict_types=1);
 
 namespace App\EventSubscriber;
 
+use Symfony\Component\{
+    EventDispatcher\EventSubscriberInterface,
+    HttpFoundation\Request,
+    HttpKernel\Event\ViewEvent,
+    HttpKernel\KernelEvents,
+    Security\Core\Authentication\Token\Storage\TokenStorageInterface
+};
 use ApiPlatform\Symfony\EventListener\EventPriorities;
 use App\Entity\OwnerInterface;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Event\ViewEvent;
-use Symfony\Component\HttpKernel\KernelEvents;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 readonly class OwnerOfCreatedProductSubscriber implements EventSubscriberInterface
 {

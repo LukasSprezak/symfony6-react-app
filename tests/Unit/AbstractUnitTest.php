@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Unit;
+namespace App\Tests\Unit;
 
 use Mockery;
 use PHPUnit\Framework\TestCase;

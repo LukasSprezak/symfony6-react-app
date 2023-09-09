@@ -4,14 +4,18 @@ declare(strict_types=1);
 
 namespace App\DataFixtures;
 
-use App\DataFixtures\Factory\CategoryFactory;
-use App\DataFixtures\Factory\CommentFactory;
-use App\DataFixtures\Factory\ProductFactory;
-use App\DataFixtures\Factory\TagFactory;
-use App\DataFixtures\Factory\UserFactory;
+use App\DataFixtures\Factory\{
+    CategoryFactory,
+    CommentFactory,
+    ProductFactory,
+    TagFactory,
+    UserFactory
+};
+use Doctrine\{
+    Bundle\FixturesBundle\Fixture,
+    Persistence\ObjectManager
+};
 use App\Enum\RoleEnum;
-use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Persistence\ObjectManager;
 use Exception;
 
 use function Zenstruck\Foundry\faker;
@@ -25,7 +29,7 @@ class AppFixtures extends Fixture
     {
         UserFactory::new()
             ->withAttributes([
-                'email' => 'admin@admin.pl',
+                'email' => 'admin@admin.com',
                 'plainPassword' => 'admin'
             ])
             ->promoteRole(RoleEnum::ROLE_ADMIN->value)
@@ -33,7 +37,7 @@ class AppFixtures extends Fixture
 
         UserFactory::new()
             ->withAttributes([
-                'email' => 'user@admin.pl',
+                'email' => 'user@admin.com',
                 'plainPassword' => 'admin'
             ])
             ->promoteRole(RoleEnum::ROLE_USER->value)

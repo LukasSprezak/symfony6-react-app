@@ -1,0 +1,51 @@
+App\Entity\User:
+  user_admin:
+    id: 1
+    username: admin1
+    email: admin@admin.com
+    password: '\$argon2i\$v=19\$m=1024,t=2,p=2\$VDVhNGQ3aXJWOERlUjFXNA\$XbciSUQoCYR4Z9lFxyLIXumra84HJzyBzLYMB+H6cMU'
+    repeat_password: '\$argon2i\$v=19\$m=1024,t=2,p=2\$VDVhNGQ3aXJWOERlUjFXNA\$XbciSUQoCYR4Z9lFxyLIXumra84HJzyBzLYMB+H6cMU'
+    roles: [ ROLE_USER, ROLE_ADMIN ]
+    enabled: true
+    created_at: <(new \DateTimeImmutable('2023-09-09'))>
+
+  user_user:
+    id: 2
+    username: user1
+    email: user1@admin.com
+    password: '\$argon2i\$v=19\$m=1024,t=2,p=2\$VDVhNGQ3aXJWOERlUjFXNA\$XbciSUQoCYR4Z9lFxyLIXumra84HJzyBzLYMB+H6cMU'
+    repeat_password: '\$argon2i\$v=19\$m=1024,t=2,p=2\$VDVhNGQ3aXJWOERlUjFXNA\$XbciSUQoCYR4Z9lFxyLIXumra84HJzyBzLYMB+H6cMU'
+    roles: [ ROLE_USER ]
+    enabled: true
+    created_at: <(new \DateTimeImmutable('2023-09-09'))>
+
+App\Entity\Product:
+  product1:
+    id: 1
+    category_id: '@category1'
+    owner_id: '@user_user'
+    name: 'name text'
+    status: !php/const App\Enum\StatusProductEnum::IN_PREPARATION
+    description: '<sentence()>'
+    slug: 'product-1'
+    created_at: <(new \DateTimeImmutable('2023-09-09'))>
+
+App\Entity\Comment:
+  comment1:
+    id: 1
+    product_id: '@product1'
+    owner_id: '@user_user'
+    content: '<sentence(3)>'
+    published_at: <(new \DateTimeImmutable('2023-09-09'))>
+
+App\Entity\Category:
+  category1:
+    id: 1
+    name: 'category name'
+    created_at: <(new \DateTimeImmutable('2023-09-09'))>
+
+App\Entity\Tag:
+  tag1:
+    id: 1
+    name: 'tag name'
+    created_at: <(new \DateTimeImmutable('2023-09-09'))>

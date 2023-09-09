@@ -4,20 +4,24 @@ declare(strict_types=1);
 
 namespace Functional;
 
-use ApiPlatform\Symfony\Bundle\Test\ApiTestCase;
-use ApiPlatform\Symfony\Bundle\Test\Client;
-use ApiPlatform\Symfony\Routing\Router;
+use ApiPlatform\Symfony\{
+    Bundle\Test\Client,
+    Bundle\Test\ApiTestCase
+};
+use Symfony\Component\HttpFoundation\{
+    Request,
+    Response
+};
+use Symfony\Contracts\HttpClient\Exception\{
+    ClientExceptionInterface,
+    DecodingExceptionInterface,
+    RedirectionExceptionInterface,
+    ServerExceptionInterface,
+    TransportExceptionInterface
+};
+use Exception;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
-use Exception;
-use RuntimeException;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
-use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
-use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
-use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
-use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 
 abstract class AbstractFunctionalTest extends ApiTestCase
 {
@@ -31,16 +35,7 @@ abstract class AbstractFunctionalTest extends ApiTestCase
     protected function setUp(): void
     {
         self::bootKernel();
-
-        $this->client = static::createClient();
-        $this->entityManager = $this->client->getContainer()->get('doctrine')->getManager();
-        $router = static::getContainer()->get('api_platform.router');
-
-        if (!$router instanceof Router) {
-            throw new RuntimeException('api_platform.router service not found.');
-        }
-
-        $this->router = $router;
+        $this->entityManager = static::createClient()->getContainer()->get('doctrine')->getManager();
     }
 
     protected function tearDown(): void
