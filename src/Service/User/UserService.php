@@ -4,16 +4,17 @@ declare(strict_types=1);
 
 namespace App\Service\User;
 
-use App\{DTO\User\CreateUserDTO,
-    Exception\Password\PasswordException,
-    Messenger\Message\RequestResetPasswordMessage,
-    Messenger\RoutingKey,
+use App\{
+    DTO\User\CreateUserDTO,
     Repository\UserRepository,
     Entity\User,
-    Service\Password\PasswordService};
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
-use Symfony\Component\Messenger\Bridge\Amqp\Transport\AmqpStamp;
-use Symfony\Component\Security\Core\Exception\UserNotFoundException;
+    Service\Password\PasswordService
+};
+use Symfony\Component\{
+    HttpKernel\Exception\BadRequestHttpException,
+    Security\Core\Exception\UserNotFoundException,
+};
+use DateTimeImmutable;
 use function sha1;
 use function uniqid;
 use function sprintf;
@@ -36,7 +37,9 @@ final readonly class UserService
         $user->setToken(sha1(uniqid(prefix: '', more_entropy: true)));
         $user->setEnabled(false);
 
-        return $this->userRepository->save($user);
+        $this->userRepository->save($user);
+
+        return $user;
     }
 
     public function activateAccount(string $id, string $token): User
@@ -60,6 +63,7 @@ final readonly class UserService
         }
 
         $user->setPassword($this->passwordService->generateEncodedPassword($user, $newPassword));
+        $user->setLastPasswordChange(new DateTimeImmutable('now'));
 
         $this->userRepository->save($user);
 

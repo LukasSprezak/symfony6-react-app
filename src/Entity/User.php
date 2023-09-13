@@ -23,12 +23,14 @@ use Symfony\Component\{
     Serializer\Annotation\Groups,
     Validator\Constraints as Assert
 };
-use App\{Controller\User\ActivateAccountController,
+use App\{
+    Controller\User\ActivateAccountController,
     Controller\User\ChangePasswordController,
     Controller\User\CreateAccountController,
     Controller\User\ResetPasswordController,
     Enum\RoleEnum,
-    Repository\UserRepository};
+    Repository\UserRepository
+};
 use DateTimeImmutable;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
@@ -133,6 +135,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: Types::STRING, nullable: true)]
     private ?string $resetPasswordToken;
+
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
+    private ?DateTimeImmutable $lastPasswordChange = null;
 
     #[ORM\OneToMany('owner', Comment::class)]
     #[Groups(['read'])]
@@ -296,6 +301,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setResetPasswordToken(?string $resetPasswordToken): void
     {
         $this->resetPasswordToken = $resetPasswordToken;
+    }
+
+    public function getLastPasswordChange(): ?DateTimeImmutable
+    {
+        return $this->lastPasswordChange;
+    }
+
+    public function setLastPasswordChange(DateTimeImmutable $lastPasswordChange): static
+    {
+        $this->lastPasswordChange = $lastPasswordChange;
+
+        return $this;
     }
 
     public function getComments(): Collection
