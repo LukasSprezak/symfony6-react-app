@@ -26,6 +26,7 @@ use Symfony\Component\{
 use App\{Controller\User\ActivateAccountController,
     Controller\User\ChangePasswordController,
     Controller\User\CreateAccountController,
+    Controller\User\ResetPasswordController,
     Enum\RoleEnum,
     Repository\UserRepository};
 use DateTimeImmutable;
@@ -44,13 +45,19 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
             controller: CreateAccountController::class,
             name: 'create_account',
         ),
+        new Post(
+            uriTemplate: '/users/reset-password',
+            controller: ResetPasswordController::class,
+            deserialize: false,
+            name: 'reset_password',
+        ),
         new Put(
             uriTemplate: '/users/active-account/{id}',
             controller: ActivateAccountController::class,
             name: 'active_account',
         ),
         new Put(
-          uriTemplate: '/users/change-password/{id}',
+            uriTemplate: '/users/change-password/{id}',
             controller: ChangePasswordController::class,
             name: 'change_password',
         ),

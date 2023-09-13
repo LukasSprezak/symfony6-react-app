@@ -31,8 +31,8 @@ final readonly class ChangePasswordController
                     )
                 ],
                 'message' => 'The password has been successfully changed.',
-                'code' => Response::HTTP_CREATED,
-            ], status: Response::HTTP_CREATED);
+                'code' => Response::HTTP_OK,
+            ], status: Response::HTTP_OK);
         } catch (Exception $exception) {
             return new JsonResponse([
                 'data' => [

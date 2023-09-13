@@ -4,31 +4,29 @@ declare(strict_types=1);
 
 namespace App\Controller\User;
 
-use Symfony\Component\{HttpFoundation\JsonResponse,
+use Symfony\Component\{
+    HttpKernel\Attribute\AsController,
+    HttpFoundation\JsonResponse,
     HttpFoundation\Request,
-    HttpFoundation\Response,
-    HttpKernel\Attribute\AsController
+    HttpFoundation\Response
 };
 use App\Service\User\UserService;
 use Exception;
 
 #[AsController]
-final readonly class ActivateAccountController
+final readonly class ResetPasswordController
 {
     public function __construct(private UserService $userService) {}
 
-    public function __invoke(Request $request, string $id): JsonResponse
+    public function __invoke(Request $request): JsonResponse
     {
         try {
             return new JsonResponse([
                 'data' => [
                     'status' => true,
-                    'activeAccount' => $this->userService->activateAccount(
-                        $id,
-                        $request->getPayload()->get(key: 'token')
-                    ),
+                    'resetPasswordData' => $this->userService->resetPassword($request->getPayload()->get(key: 'email')),
                 ],
-                'message' => 'User has been successfully activated',
+                'message' => 'Reset password email sent to you.',
                 'code' => Response::HTTP_OK,
             ], status: Response::HTTP_OK);
         } catch (Exception $exception) {

@@ -6,10 +6,13 @@ namespace App\Service\User;
 
 use App\{DTO\User\CreateUserDTO,
     Exception\Password\PasswordException,
+    Messenger\Message\RequestResetPasswordMessage,
+    Messenger\RoutingKey,
     Repository\UserRepository,
     Entity\User,
     Service\Password\PasswordService};
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\Messenger\Bridge\Amqp\Transport\AmqpStamp;
 use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 use function sha1;
 use function uniqid;
@@ -63,6 +66,16 @@ final readonly class UserService
         return $user;
     }
 
+    public function resetPassword(string $email): User
+    {
+        $user = $this->findOneUserByEmailOrFail($email);
+        $user->setResetPasswordToken(sha1(uniqid(prefix: '', more_entropy: true)));
+
+        $this->userRepository->save($user);
+
+        return $user;
+    }
+
     private function findOneInactiveUserByIdAndTokenOrFail(string $id, string $token): User
     {
         $user = $this->userRepository->findOneBy([
@@ -73,6 +86,17 @@ final readonly class UserService
 
         if (null === $user) {
             throw new UserNotFoundException(sprintf('User with id %s and token %s not found', $id, $token));
+        }
+
+        return $user;
+    }
+
+    private function findOneUserByEmailOrFail(string $email): User
+    {
+        if (null === $user = $this->userRepository->findOneBy([
+            'email' => $email
+        ])) {
+            throw new UserNotFoundException(sprintf('User with email %s not found', $email));
         }
 
         return $user;
