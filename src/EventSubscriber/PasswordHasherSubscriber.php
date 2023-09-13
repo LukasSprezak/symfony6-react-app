@@ -10,7 +10,6 @@ use Symfony\Component\{
     HttpKernel\Event\ViewEvent,
     HttpKernel\KernelEvents,
     PasswordHasher\Hasher\UserPasswordHasherInterface
-
 };
 use ApiPlatform\Symfony\EventListener\EventPriorities;
 use App\Entity\User;

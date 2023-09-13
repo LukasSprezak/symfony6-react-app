@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Repository;
 
-use Doctrine\{
-    Bundle\DoctrineBundle\Repository\ServiceEntityRepository,
+use Doctrine\{Bundle\DoctrineBundle\Repository\ServiceEntityRepository,
+    ORM\EntityManagerInterface,
     Persistence\ManagerRegistry
 };
 use App\Entity\User;
@@ -20,26 +20,18 @@ use App\Entity\User;
  */
 class UserRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
-    {
+    public function __construct(
+        ManagerRegistry $registry,
+        private readonly EntityManagerInterface $entityManager,
+    ) {
         parent::__construct($registry, User::class);
     }
 
-    public function save(User $entity, bool $flush = false): void
+    public function save(User $user): User
     {
-        $this->getEntityManager()->persist($entity);
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
 
-        if ($flush) {
-            $this->getEntityManager()->flush();
-        }
-    }
-
-    public function remove(User $entity, bool $flush = false): void
-    {
-        $this->getEntityManager()->remove($entity);
-
-        if ($flush) {
-            $this->getEntityManager()->flush();
-        }
+        return $user;
     }
 }

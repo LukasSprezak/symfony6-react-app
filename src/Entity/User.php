@@ -23,10 +23,12 @@ use Symfony\Component\{
     Serializer\Annotation\Groups,
     Validator\Constraints as Assert
 };
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use App\Enum\RoleEnum;
-use App\Repository\UserRepository;
+use App\{Controller\User\ActivateAccountController,
+    Controller\User\CreateAccountController,
+    Enum\RoleEnum,
+    Repository\UserRepository};
 use DateTimeImmutable;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ApiResource(
     operations: [
@@ -35,6 +37,16 @@ use DateTimeImmutable;
                 'groups' => ['read']
             ],
             security: "is_granted('IS_AUTHENTICATED_FULLY')"
+        ),
+        new Post(
+            uriTemplate: '/users/create-account',
+            controller: CreateAccountController::class,
+            name: 'create_account',
+        ),
+        new Put(
+            uriTemplate: '/users/active-account/{id}',
+            controller: ActivateAccountController::class,
+            name: 'active_account',
         ),
         new Put(
             normalizationContext: [
@@ -102,6 +114,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: Types::BOOLEAN)]
     #[Groups(['put', 'post'])]
     private bool $enabled;
+
+    #[ORM\Column(type: Types::STRING, nullable: true)]
+    private ?string $token;
+
+    #[ORM\Column(type: Types::STRING, nullable: true)]
+    private ?string $resetPasswordToken;
 
     #[ORM\OneToMany('owner', Comment::class)]
     #[Groups(['read'])]
@@ -243,6 +261,28 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->enabled = $enabled;
 
         return $this;
+    }
+
+    public function getToken(): ?string
+    {
+        return $this->token;
+    }
+
+    public function setToken(?string $token): self
+    {
+        $this->token = $token;
+
+        return $this;
+    }
+
+    public function getResetPasswordToken(): ?string
+    {
+        return $this->resetPasswordToken;
+    }
+
+    public function setResetPasswordToken(?string $resetPasswordToken): void
+    {
+        $this->resetPasswordToken = $resetPasswordToken;
     }
 
     public function getComments(): Collection

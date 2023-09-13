@@ -4,15 +4,19 @@ declare(strict_types=1);
 
 namespace Functional\Api;
 
+use Symfony\Component\HttpFoundation\{
+    Request,
+    Response
+};
+use Symfony\Contracts\HttpClient\Exception\{
+    ClientExceptionInterface,
+    DecodingExceptionInterface,
+    RedirectionExceptionInterface,
+    ServerExceptionInterface,
+    TransportExceptionInterface
+};
 use Functional\AbstractFunctionalTest;
 use Hautelook\AliceBundle\PhpUnit\ReloadDatabaseTrait;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
-use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
-use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
-use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
-use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 
 class ProductResourceTest extends AbstractFunctionalTest
 {

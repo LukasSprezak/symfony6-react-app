@@ -4,16 +4,22 @@ declare(strict_types=1);
 
 namespace App\Repository;
 
-use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\Exception;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\Exception\NotSupported;
-use Doctrine\ORM\OptimisticLockException;
-Use Doctrine\ORM\Exception\ORMException;
-use Doctrine\Persistence\ManagerRegistry;
-use Doctrine\Persistence\Mapping\MappingException;
-use Doctrine\Persistence\ObjectManager;
-use Doctrine\Persistence\ObjectRepository;
+use Doctrine\DBAL\{
+    Connection,
+    Exception
+};
+use Doctrine\ORM\{
+    EntityManager,
+    Exception\NotSupported,
+    OptimisticLockException,
+    Exception\ORMException
+};
+use Doctrine\Persistence\{
+    ManagerRegistry,
+    Mapping\MappingException,
+    ObjectManager,
+    ObjectRepository
+};
 
 abstract class AbstractBaseRepository
 {
@@ -24,9 +30,10 @@ abstract class AbstractBaseRepository
     /**
      * @throws NotSupported
      */
-    public function __construct(private readonly ManagerRegistry $managerRegistry, protected Connection $connection)
-    {
-
+    public function __construct(
+        protected readonly Connection $connection,
+        private readonly ManagerRegistry $managerRegistry,
+    ) {
         $this->objectRepository = $this->getEntityManager()->getRepository(self::entityClass());
     }
 
