@@ -4,7 +4,12 @@ declare(strict_types=1);
 
 namespace App\Service\User;
 
-use App\{DTO\User\CreateUserDTO, Repository\UserRepository, Entity\User, Service\Password\PasswordService};
+use App\{DTO\User\CreateUserDTO,
+    Exception\Password\PasswordException,
+    Repository\UserRepository,
+    Entity\User,
+    Service\Password\PasswordService};
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 use function sha1;
 use function uniqid;
@@ -33,7 +38,7 @@ final readonly class UserService
 
     public function activateAccount(string $id, string $token): User
     {
-        $user = $this->findOneInactiveByIdAndTokenOrFail($id, $token);
+        $user = $this->findOneInactiveUserByIdAndTokenOrFail($id, $token);
 
         $user->setEnabled(true);
         $user->setToken(null);
@@ -43,7 +48,22 @@ final readonly class UserService
         return $user;
     }
 
-    private function findOneInactiveByIdAndTokenOrFail(string $id, string $token): User
+    public function changePassword(string $userId, string $oldPassword, string $newPassword): User
+    {
+        $user = $this->findOneUserByIdOrFail($userId);
+
+        if (!$this->passwordService->isValidPassword($user, $oldPassword)) {
+            throw new BadRequestHttpException(message: 'Old password does not match.');
+        }
+
+        $user->setPassword($this->passwordService->generateEncodedPassword($user, $newPassword));
+
+        $this->userRepository->save($user);
+
+        return $user;
+    }
+
+    private function findOneInactiveUserByIdAndTokenOrFail(string $id, string $token): User
     {
         $user = $this->userRepository->findOneBy([
             'id' => $id,
@@ -53,6 +73,15 @@ final readonly class UserService
 
         if (null === $user) {
             throw new UserNotFoundException(sprintf('User with id %s and token %s not found', $id, $token));
+        }
+
+        return $user;
+    }
+
+    private function findOneUserByIdOrFail(string $id): User
+    {
+        if (null === $user = $this->userRepository->find($id)) {
+            throw new UserNotFoundException(sprintf('User with id %s not found', $id));
         }
 
         return $user;

@@ -24,6 +24,7 @@ use Symfony\Component\{
     Validator\Constraints as Assert
 };
 use App\{Controller\User\ActivateAccountController,
+    Controller\User\ChangePasswordController,
     Controller\User\CreateAccountController,
     Enum\RoleEnum,
     Repository\UserRepository};
@@ -47,6 +48,11 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
             uriTemplate: '/users/active-account/{id}',
             controller: ActivateAccountController::class,
             name: 'active_account',
+        ),
+        new Put(
+          uriTemplate: '/users/change-password/{id}',
+            controller: ChangePasswordController::class,
+            name: 'change_password',
         ),
         new Put(
             normalizationContext: [

@@ -17,7 +17,7 @@ use Symfony\Component\{
 use Exception;
 
 #[AsController]
-readonly class CreateAccountController
+final readonly class CreateAccountController
 {
     public function __construct(private UserService $userService) {}
 
