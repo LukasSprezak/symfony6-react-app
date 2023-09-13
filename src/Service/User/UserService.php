@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Service\User;
 
 use App\{
+    Core\Queue\User\UserCreate\Query\UserCreateQuery,
     DTO\User\CreateUserDTO,
     Repository\UserRepository,
     Entity\User,
@@ -12,7 +13,8 @@ use App\{
 };
 use Symfony\Component\{
     HttpKernel\Exception\BadRequestHttpException,
-    Security\Core\Exception\UserNotFoundException,
+    Messenger\MessageBusInterface,
+    Security\Core\Exception\UserNotFoundException
 };
 use DateTimeImmutable;
 use function sha1;
@@ -24,6 +26,7 @@ final readonly class UserService
     public function __construct(
         private UserRepository $userRepository,
         private PasswordService $passwordService,
+        private MessageBusInterface $messageBus
     ) {}
 
     public function createAccount(CreateUserDTO $createUserDTO): User
@@ -38,6 +41,15 @@ final readonly class UserService
         $user->setEnabled(false);
 
         $this->userRepository->save($user);
+
+        $this->messageBus->dispatch(
+            new UserCreateQuery(
+                $user->getId(),
+                $user->getUsername(),
+                $user->getEmail(),
+                $user->getToken()
+            )
+        );
 
         return $user;
     }
