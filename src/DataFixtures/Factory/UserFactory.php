@@ -12,8 +12,10 @@ use Zenstruck\Foundry\{
     Factory,
     ModelFactory
 };
-use App\Entity\User;
-use App\Enum\RoleEnum;
+use App\{
+    Entity\User,
+    Enum\RoleEnum
+};
 use DateTimeImmutable;
 
 use function Zenstruck\Foundry\faker;

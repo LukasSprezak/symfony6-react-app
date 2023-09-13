@@ -11,6 +11,8 @@ if [ "$answer" != "${answer#[Yy]}" ] && [ "$Env" != "prod" ] ;then
   php bin/console lexik:jwt:generate-keypair
   php bin/console d:s:u --force
   php bin/console doctrine:fixtures:load
+  php bin/console --env=test doctrine:database:create
+  php bin/console --env=test d:s:u --force
 
   chmod 777 -R var/cache/*
 

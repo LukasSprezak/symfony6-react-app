@@ -47,7 +47,7 @@ class AppFixtures extends Fixture
             ->many(20)
             ->create(function() {
                 return [
-                    'tags' => TagFactory::createMany(20),
+                    'tags' => TagFactory::createMany(10),
                     'category' => CategoryFactory::new([
                         'name' => faker()->words(random_int(2,6), asText: true)
                         ]),
@@ -55,7 +55,7 @@ class AppFixtures extends Fixture
                 })
             ;
 
-        CommentFactory::new()->createMany(30);
+        CommentFactory::new()->createMany(10);
 
         $manager->flush();
     }
