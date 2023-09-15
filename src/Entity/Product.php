@@ -56,7 +56,8 @@ class Product implements OwnerInterface
     private ?int $id = null;
 
     #[ORM\Column(type: Types::STRING)]
-    #[Assert\NotBlank]
+    #[Assert\NotNull]
+    #[Assert\Length(min: 2, max: 32)]
     #[Groups(['post'])]
     private ?string $name = null;
 
@@ -93,7 +94,7 @@ class Product implements OwnerInterface
     private string $description;
 
     #[ORM\Column(type: Types::STRING)]
-    #[Assert\NotBlank]
+    #[Assert\NotNull]
     #[Groups(['post'])]
     private ?string $slug;
 

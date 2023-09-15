@@ -4,13 +4,7 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
-use ApiPlatform\Metadata\{
-    ApiResource,
-    Get,
-    Post,
-    Put,
-    GetCollection
-};
+use ApiPlatform\Metadata\{ApiResource, Get, Post, Put, GetCollection};
 use Doctrine\{
     Common\Collections\ArrayCollection,
     Common\Collections\Collection,
@@ -78,9 +72,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
                 'groups' => ['post']
             ],
         ),
-    ]
-)
-]
+    ], paginationItemsPerPage: 10
+)]
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: 'users')]
 #[UniqueEntity(fields: ['username', 'email'])]
