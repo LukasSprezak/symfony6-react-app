@@ -36,7 +36,7 @@ class LogChecker
     #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
     private ?string $requestRoute = null;
 
-    #[ORM\Column(type: Types::JSON)]
+    #[ORM\Column]
     private array $eventData = [];
 
     #[ORM\Column(type: Types::STRING, length: 255)]
@@ -136,7 +136,7 @@ class LogChecker
         return $this->ipAddress;
     }
 
-    public function setIpAddress(string $ipAddress): self
+    public function setIpAddress(?string $ipAddress): self
     {
         $this->ipAddress = $ipAddress;
 

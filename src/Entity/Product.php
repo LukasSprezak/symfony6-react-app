@@ -5,12 +5,11 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use ApiPlatform\Metadata\{ApiResource, Delete, Get, Post, Put, GetCollection};
-use Doctrine\{
-    Common\Collections\ArrayCollection,
+use Doctrine\{Common\Collections\ArrayCollection,
     Common\Collections\Collection,
     DBAL\Types\Types,
-    ORM\Mapping as ORM
-};
+    ORM\Mapping as ORM,
+    ORM\Mapping\Embedded};
 
 use Symfony\Component\{
     Security\Core\User\UserInterface,
