@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
-use ApiPlatform\Metadata\{ApiResource, Get, Post, Put, GetCollection};
+use ApiPlatform\Doctrine\Orm\Filter\BooleanFilter;
+use ApiPlatform\Metadata\{ApiFilter, ApiResource, Get, Post, Put, GetCollection};
 use Doctrine\{
     Common\Collections\ArrayCollection,
     Common\Collections\Collection,
@@ -39,6 +40,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
         new Post(
             uriTemplate: '/users/create-account',
             controller: CreateAccountController::class,
+            security: "is_granted('". RoleEnum::ROLE_USER->value ."')",
             name: 'create_account',
         ),
         new Post(
@@ -120,6 +122,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $logo;
 
     #[ORM\Column(type: Types::BOOLEAN)]
+    #[ApiFilter(BooleanFilter::class)]
     #[Groups(['put', 'post'])]
     private bool $enabled;
 

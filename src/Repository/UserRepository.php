@@ -20,6 +20,8 @@ use App\Entity\User;
  */
 class UserRepository extends ServiceEntityRepository
 {
+    use BaseRepositoryTrait;
+
     public function __construct(
         ManagerRegistry $registry,
         private readonly EntityManagerInterface $entityManager,

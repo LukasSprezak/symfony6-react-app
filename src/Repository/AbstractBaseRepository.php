@@ -8,12 +8,12 @@ use Doctrine\DBAL\{
     Connection,
     Exception
 };
-use Doctrine\ORM\{
-    EntityManager,
+use Doctrine\ORM\{EntityManager,
     Exception\NotSupported,
+    NonUniqueResultException,
+    NoResultException,
     OptimisticLockException,
-    Exception\ORMException
-};
+    Exception\ORMException};
 use Doctrine\Persistence\{
     ManagerRegistry,
     Mapping\MappingException,

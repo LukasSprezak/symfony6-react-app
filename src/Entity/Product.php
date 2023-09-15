@@ -4,13 +4,7 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
-use ApiPlatform\Metadata\{
-    ApiResource,
-    Get,
-    Post,
-    Put,
-    GetCollection
-};
+use ApiPlatform\Metadata\{ApiResource, Delete, Get, Post, Put, GetCollection};
 use Doctrine\{
     Common\Collections\ArrayCollection,
     Common\Collections\Collection,
@@ -38,6 +32,7 @@ use DateTimeImmutable;
         new Post(
             security: "is_granted('IS_AUTHENTICATED_FULLY')",
         ),
+        new Delete(),
     ],
     denormalizationContext: [
         'groups' => ['post']
