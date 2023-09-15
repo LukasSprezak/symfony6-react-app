@@ -25,7 +25,7 @@ use function array_pop;
 #[AsDoctrineListener(event: Events::postUpdate, priority: 500, connection: 'default')]
 #[AsDoctrineListener(event: Events::preRemove, priority: 500, connection: 'default')]
 #[AsDoctrineListener(event: Events::postRemove, priority: 500, connection: 'default')]
-class LogCheckerSubscriber
+final class LogCheckerSubscriber
 {
     private const NAMESPACE = 'App\Entity\\';
 

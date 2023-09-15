@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Core\Queue\User\UserCreate\Query;
+namespace App\Core\Infrastructure\Queue\User\UserCreate\Query;
 
-class UserCreateQuery
+final class UserCreateQuery
 {
     private int $id;
     private string $username;

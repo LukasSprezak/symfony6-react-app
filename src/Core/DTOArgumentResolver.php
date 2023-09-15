@@ -20,7 +20,7 @@ use Symfony\Component\Serializer\{
 };
 use function str_starts_with;
 
-class DTOArgumentResolver implements ValueResolverInterface
+final class DTOArgumentResolver implements ValueResolverInterface
 {
     private const NAMESPACE = 'App\DTO';
 

@@ -12,7 +12,7 @@ use App\Entity\LogChecker;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 
-class LogCheckerService
+final class LogCheckerService
 {
     private const ROUTE = '_route';
 

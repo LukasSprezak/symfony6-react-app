@@ -6,7 +6,7 @@ namespace App\DTO\User;
 
 use JsonSerializable;
 
-class CreateUserDTO implements JsonSerializable
+final class CreateUserDTO implements JsonSerializable
 {
     private string $username;
 

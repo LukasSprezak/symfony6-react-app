@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Service\Password;
 
-use App\Entity\User;
 use Symfony\Component\{
     HttpKernel\Exception\BadRequestHttpException
 };
@@ -12,9 +11,10 @@ use Symfony\Component\{
     PasswordHasher\Hasher\UserPasswordHasherInterface,
     Security\Core\User\UserInterface
 };
+use App\Entity\User;
 use function strlen;
 
-class PasswordService
+final class PasswordService
 {
     private const MINIMUM_LENGTH = 8;
 

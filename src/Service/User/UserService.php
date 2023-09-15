@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace App\Service\User;
 
 use App\{
-    Core\Queue\User\UserCreate\Query\UserCreateQuery,
+    Core\Infrastructure\Queue\User\UserCreate\Query\UserCreateQuery,
     DTO\User\CreateUserDTO,
-    Repository\UserRepository,
     Entity\User,
+    Repository\UserRepository,
     Service\Password\PasswordService
 };
 use Symfony\Component\{
@@ -18,8 +18,8 @@ use Symfony\Component\{
 };
 use DateTimeImmutable;
 use function sha1;
-use function uniqid;
 use function sprintf;
+use function uniqid;
 
 final readonly class UserService
 {

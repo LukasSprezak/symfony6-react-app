@@ -14,7 +14,7 @@ use Symfony\Component\{
 use ApiPlatform\Symfony\EventListener\EventPriorities;
 use App\Entity\User;
 
-readonly class PasswordHasherSubscriber implements EventSubscriberInterface
+final readonly class PasswordHasherSubscriber implements EventSubscriberInterface
 {
     public function __construct(
         private UserPasswordHasherInterface $passwordHasher,

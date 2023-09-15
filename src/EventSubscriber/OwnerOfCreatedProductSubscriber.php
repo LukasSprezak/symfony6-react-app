@@ -14,7 +14,7 @@ use Symfony\Component\{
 use ApiPlatform\Symfony\EventListener\EventPriorities;
 use App\Entity\OwnerInterface;
 
-readonly class OwnerOfCreatedProductSubscriber implements EventSubscriberInterface
+final readonly class OwnerOfCreatedProductSubscriber implements EventSubscriberInterface
 {
     public function __construct(
         private TokenStorageInterface $tokenStorage,

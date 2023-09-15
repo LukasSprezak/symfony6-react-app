@@ -16,7 +16,7 @@ framework:
             # sync: 'sync://'
 
         routing:
-            App\Core\Queue\User\UserCreate\Query\UserCreateQuery: async
+            App\Core\Infrastructure\Queue\User\UserCreate\Query\UserCreateQuery: async
 
             # Route your messages to the transports
             # 'App\Message\YourMessage': async
