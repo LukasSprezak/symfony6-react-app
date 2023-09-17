@@ -1,16 +1,23 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import React, { Suspense } from 'react';
+import { Routes, Route } from "react-router-dom";
+import ProductList from "../product/ProductList";
+import NavBar from "./NavBar";
+import PageNotFound from "./PageNotFound";
 
 const Main: React.FC = () => {
     return (
-        <Router>
-            <Routes>
-                {/*<Route exact path="/"   />*/}
-                <Route path="create"   />
-                <Route path="edit/:id" />
-                <Route path="show/:id"  />
-            </Routes>
-        </Router>
+        <>
+            <NavBar />
+            <Suspense fallback={<div className="container">Loading...</div>}>
+                <Routes>
+                    <Route path="product-list" element={<ProductList/>}/>
+                    <Route path="create"/>
+                    <Route path="edit/:id"/>
+                    <Route path="show/:id"/>
+                    <Route path="*" element={<PageNotFound />} />
+                </Routes>
+            </Suspense>
+        </>
     );
 }
 
