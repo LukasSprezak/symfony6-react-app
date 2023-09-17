@@ -73,7 +73,7 @@ class UserFactory extends ModelFactory
                 $filesystem = new Filesystem();
                 $logoFileName = self::faker()->slug(nbWords: 3) . self::MIME_PNG;
 
-                $file = __DIR__ . '/../../../assets/images/' . $user->getLogo();
+                $file = __DIR__ . '/../../../client/images/' . $user->getLogo();
                 $destination = __DIR__ . '/../../../public/uploads/logo/' . $logoFileName;
 
                 $filesystem->copy(
