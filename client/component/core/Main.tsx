@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import ProductList from "../product/ProductList";
 import NavBar from "./NavBar";
 import PageNotFound from "./PageNotFound";
+import { Register } from "../user/Register";
 
 const Main: React.FC = () => {
     return (
@@ -14,6 +15,7 @@ const Main: React.FC = () => {
                     <Route path="create"/>
                     <Route path="edit/:id"/>
                     <Route path="show/:id"/>
+                    <Route path="register" element={<Register/>}/>
                     <Route path="*" element={<PageNotFound />} />
                 </Routes>
             </Suspense>
