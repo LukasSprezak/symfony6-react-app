@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { NavigateFunction, useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -8,7 +8,7 @@ const Product: React.FC = () => {
     const [products, setProducts]: [Product[], (products: Product[]) => void] = React.useState(defaultProducts);
     const [error, setError]: [string, (error: string) => void] = React.useState('');
 
-    React.useEffect(() => {
+    useEffect(() => {
         axios
             .get<Product[]|any>('/api/products')
             .then(response => {

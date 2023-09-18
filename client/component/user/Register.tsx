@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
+import axios from "axios";
 
 export const Register: React.FC = () => {
     const [username, setUsername] = useState('');
@@ -10,6 +11,14 @@ export const Register: React.FC = () => {
         event.preventDefault();
         console.log(email);
     }
+
+    useEffect(() => {
+        axios
+            .post('/api/users/create-account')
+            .then((response: any): void => {
+                response.data()
+            })
+    }, []);
 
     return (
         <div className="auth-form-container">

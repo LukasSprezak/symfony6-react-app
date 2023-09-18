@@ -4,6 +4,7 @@ import ProductList from "../product/ProductList";
 import NavBar from "./NavBar";
 import PageNotFound from "./PageNotFound";
 import { Register } from "../user/Register";
+import Login from "../user/Login";
 
 const Main: React.FC = () => {
     return (
@@ -11,6 +12,7 @@ const Main: React.FC = () => {
             <NavBar />
             <Suspense fallback={<div className="container">Loading...</div>}>
                 <Routes>
+                    <Route path="login" element={<Login/>}/>
                     <Route path="product-list" element={<ProductList/>}/>
                     <Route path="create"/>
                     <Route path="edit/:id"/>
