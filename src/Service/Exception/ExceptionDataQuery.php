@@ -4,24 +4,24 @@ declare(strict_types=1);
 
 namespace App\Service\Exception;
 
-final readonly class ExceptionDataQuery
+class ExceptionDataQuery
 {
-    public function __construct(protected int $statusCode, protected string $message) {}
+    public function __construct(protected int $statusCode, protected string $type) {}
 
     public function getStatusCode(): int
     {
         return $this->statusCode;
     }
 
-    public function getMessage(): string
+    public function getType(): string
     {
-        return $this->message;
+        return $this->type;
     }
 
     public function toArray(): array
     {
         return [
-            'message' => $this->message,
+            'type' => $this->type,
             'statusCode' => $this->statusCode,
         ];
     }
