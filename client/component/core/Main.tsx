@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react';
-import { Routes, Route } from "react-router-dom";
+import {Route, Routes} from "react-router-dom";
 import ProductList from "../product/ProductList";
 import NavBar from "./NavBar";
 import PageNotFound from "./PageNotFound";

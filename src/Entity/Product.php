@@ -9,17 +9,21 @@ use Doctrine\{Common\Collections\ArrayCollection,
     Common\Collections\Collection,
     DBAL\Types\Types,
     ORM\Mapping as ORM,
-    ORM\Mapping\Embedded};
-
-use Symfony\Component\{
-    Security\Core\User\UserInterface,
+};
+use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\{Security\Core\User\UserInterface,
     Serializer\Annotation\Groups,
+    String\AbstractString,
+    String\UnicodeString,
     Validator\Constraints as Assert
 };
+use App\{
+    Enum\StatusProductEnum,
+    Repository\ProductRepository
+};
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use App\Enum\StatusProductEnum;
-use App\Repository\ProductRepository;
 use DateTimeImmutable;
+use function Symfony\Component\String\u;
 
 #[ApiResource(
     operations: [
@@ -90,6 +94,7 @@ class Product implements OwnerInterface
     #[ORM\Column(type: Types::STRING)]
     #[Assert\NotNull]
     #[Groups(['post'])]
+    #[Gedmo\Slug(fields: ['name'])]
     private ?string $slug;
 
     public function __construct()
@@ -230,6 +235,11 @@ class Product implements OwnerInterface
         $this->slug = $slug;
 
         return $this;
+    }
+
+    public function getShortDescription(): AbstractString|UnicodeString
+    {
+        return u($this->getDescription())->truncate(length: 40, ellipsis: '...');
     }
 
     public function __toString(): string

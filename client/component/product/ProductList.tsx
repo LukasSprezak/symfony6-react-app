@@ -1,6 +1,7 @@
 import React, {useEffect} from "react";
 import { NavigateFunction, useNavigate } from "react-router-dom";
 import axios from "axios";
+import {Button, Table} from "react-bootstrap";
 
 const Product: React.FC = () => {
     const navigate: NavigateFunction = useNavigate();
@@ -24,20 +25,32 @@ const Product: React.FC = () => {
     }, []);
 
     return (
-        <div className="App">
-            <ul className="products">
-                {products.map((product: Product) => (
-                    <div key={product.id}>
-                        <p>{product.name}</p>
-                        <h3>{product.description}</h3>
-                    </div>
-                ))}
-            </ul>
-            {error && <p className="error">{error}</p>}
-            <button className="btn" onClick={() => navigate(-1)}>
-                Go Back
-            </button>
-        </div>
+        <Table striped bordered hover>
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Description</th>
+        </tr>
+        </thead>
+        <tbody className="products">
+        {products.map((product: Product) => (
+        <tr key={product.id}>
+            <td></td>
+            <td>{product.name}</td>
+            <td>{product.description}</td>
+        </tr>
+        ))}
+        </tbody>
+
+        {error && <p className="error">{error}</p>}
+        <Button
+            className="btn btn-primary btn-lg mx-3 px-5 py-3 mt-2"
+            onClick={() => navigate(-1)}
+        >
+            Go Back
+        </Button>
+    </Table>
     );
 }
 
