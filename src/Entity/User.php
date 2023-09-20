@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
-use ApiPlatform\Doctrine\Orm\Filter\BooleanFilter;
 use ApiPlatform\Metadata\{ApiFilter, ApiResource, Get, Post, Put, GetCollection};
 use Doctrine\{
     Common\Collections\ArrayCollection,
@@ -28,6 +27,7 @@ use App\{
 };
 use DateTimeImmutable;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use ApiPlatform\Doctrine\Orm\Filter\BooleanFilter;
 
 #[ApiResource(
     operations: [
@@ -74,7 +74,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
                 'groups' => ['post']
             ],
         ),
-    ], paginationItemsPerPage: 10
+    ],
+    paginationItemsPerPage: 10,
 )]
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: 'users')]
@@ -107,15 +108,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     #[Assert\NotNull]
     #[Groups(['put', 'post'])]
+    #[Assert\Regex(
+        pattern: "/(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}/",
+        message: 'The password must be eight characters long and contain at least one number, one upper case letter and one lower case letter.',
+    )]
     private ?string $password;
 
     #[ORM\Column]
     #[Assert\NotNull]
     #[Groups(['put', 'post'])]
+    #[Assert\Expression(
+        "this.getPassword() === this.getRepeatPassword()",
+        message: "Password is not the same"
+    )]
     private string $repeatPassword;
 
     #[ORM\Column(nullable: true)]
-    private ?string $plainPassword;
+    private ?string $plainPassword = null;
 
     #[ORM\Column(nullable: true)]
     #[Groups(['read', 'put', 'post'])]
