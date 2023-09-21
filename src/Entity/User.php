@@ -106,21 +106,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private array $roles = [];
 
     #[ORM\Column]
-    #[Assert\NotNull]
     #[Groups(['put', 'post'])]
     #[Assert\Regex(
         pattern: "/(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}/",
         message: 'The password must be eight characters long and contain at least one number, one upper case letter and one lower case letter.',
     )]
+    #[Assert\NotNull]
     private ?string $password;
 
     #[ORM\Column]
-    #[Assert\NotNull]
     #[Groups(['put', 'post'])]
     #[Assert\Expression(
         "this.getPassword() === this.getRepeatPassword()",
         message: "Password is not the same"
     )]
+    #[Assert\NotNull]
     private string $repeatPassword;
 
     #[ORM\Column(nullable: true)]

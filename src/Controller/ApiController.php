@@ -13,7 +13,7 @@ use Symfony\{
 final class ApiController extends AbstractController
 {
     #[Route(
-        '/{reactRouting}',
+        path: '/{reactRouting}',
         name: 'app_api_index',
         requirements: ['reactRouting' => '^(?!api).+'],
         defaults: ['reactRouting' => null]
