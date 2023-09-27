@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace App\Core\Factory;
 
-use Symfony\Component\{
+use Symfony\Component\{HttpFoundation\Request,
     HttpFoundation\Response,
     Serializer\Encoder\JsonEncoder,
-    Serializer\SerializerInterface
-};
+    Serializer\SerializerInterface};
 
 final readonly class JsonResponseFactory
 {
@@ -22,5 +21,30 @@ final readonly class JsonResponseFactory
                 'Content-Type' => 'application/json;charset=UTF-8'
             ])
         );
+    }
+
+    /**
+     * @throws \JsonException
+     */
+    public function transformJsonBody(Request $request): ?Request
+    {
+        $data = json_decode(
+            json: $request->getContent(),
+            associative: true,
+            depth: JSON_THROW_ON_ERROR,
+            flags: JSON_THROW_ON_ERROR
+        );
+
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            return null;
+        }
+
+        if (null === $data) {
+            return $request;
+        }
+
+        $request->request->replace($data);
+
+        return $request;
     }
 }

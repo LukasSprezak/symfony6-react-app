@@ -4,9 +4,10 @@ import App from './App';
 import 'bootstrap/dist/css/bootstrap.css';
 import reportWebVitals from './reportWebVitals';
 
-const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
+const root: ReactDOM.Root = ReactDOM.createRoot(
+    document.getElementById('root') as HTMLElement
 );
+
 root.render(
   <React.StrictMode>
       <App />

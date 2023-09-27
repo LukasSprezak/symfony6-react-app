@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
-use ApiPlatform\Metadata\{ApiResource, Delete, Get, Post, Put, GetCollection};
+use ApiPlatform\Metadata\{ApiProperty, ApiResource, Delete, Get, Post, Put, GetCollection};
 use Doctrine\{Common\Collections\ArrayCollection,
     Common\Collections\Collection,
     DBAL\Types\Types,
@@ -69,6 +69,7 @@ class Product implements OwnerInterface
 
     #[ORM\ManyToMany(targetEntity: Tag::class, cascade: ['persist'])]
     #[ORM\JoinTable(name: 'product_tag')]
+    #[ApiProperty(readableLink: true, writableLink: false)]
     private Collection $tags;
 
     #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'products')]

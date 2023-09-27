@@ -4,7 +4,6 @@ import { BrowserRouter } from "react-router-dom";
 import React from "react";
 import store from "./store";
 import { Provider } from "react-redux";
-
 const App: React.FC = () => {
     return (
         <Provider store={store}>
@@ -15,5 +14,4 @@ const App: React.FC = () => {
         </Provider>
     )
 }
-
 export  default App;

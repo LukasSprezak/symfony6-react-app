@@ -1,23 +1,24 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import { NavigateFunction, useNavigate } from "react-router-dom";
-import axios from "axios";
-import {Button, Table} from "react-bootstrap";
+import { Button, Table } from "react-bootstrap";
+import ProductInterface from "../../interface/product/ProductInterface";
+import authFetch from "../../infrastructure/axios/axios";
 
 const Product: React.FC = () => {
     const navigate: NavigateFunction = useNavigate();
-    const defaultProducts:Product[] = [];
-    const [products, setProducts]: [Product[], (products: Product[]) => void] = React.useState(defaultProducts);
+    const defaultProducts:ProductInterface[] = [];
+    const [products, setProducts]: [ProductInterface[], (products: ProductInterface[]) => void] = React.useState(defaultProducts);
     const [error, setError]: [string, (error: string) => void] = React.useState('');
 
-    useEffect(() => {
-        axios
-            .get<Product[]|any>('/api/products')
+    useEffect((): void => {
+        authFetch
+            .get<ProductInterface[]|any>('/api/products')
             .then(response => {
                 setProducts(response.data['hydra:member']);
             })
             .catch(exception => {
                 const error =
-                    exception.response.status === 404
+                    404 === exception.response.status
                         ? "Resource Not found"
                         : "An unexpected error has occurred";
                 setError(error);
@@ -34,7 +35,7 @@ const Product: React.FC = () => {
         </tr>
         </thead>
         <tbody className="products">
-        {products.map((product: Product) => (
+        {products.map((product: ProductInterface) => (
         <tr key={product.id}>
             <td></td>
             <td>{product.name}</td>
