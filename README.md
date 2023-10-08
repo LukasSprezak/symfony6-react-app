@@ -4,8 +4,11 @@
 
 <h4><b>Usage:</b></h4>
 - docker compose up -d
+
 - docker exec -it php82-container bash
+
 - ./setup.sh OR sh setup.sh
+
 - php bin/console lexik:jwt:generate-keypair
 
 
